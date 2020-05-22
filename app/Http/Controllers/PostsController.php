@@ -18,8 +18,7 @@ class PostsController extends Controller
                 'posts' => $posts,
             ];
         }
-        
-        return view('welcome', $data);
+       return view('welcome', $data);
     }
     
      public function store(Request $request)
