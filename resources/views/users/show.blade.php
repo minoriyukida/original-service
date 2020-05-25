@@ -4,10 +4,7 @@
     <div class="row">
         <aside class="col-sm-4">
             @include('users.card', ['user' => $user])
-        </aside>
-        <div class="col-sm-8">
-            @include('users.navtabs', ['user' => $user])
-            @if (Auth::id() == $user->id)
+             @if (Auth::id() == $user->id)
                 {!! Form::open(['route' => 'posts.store']) !!}
                     <div class="form-group">
                         {!! Form::textarea('title', old('title'), ['class' => 'form-control', 'rows' => '1']) !!}
@@ -16,9 +13,15 @@
                     </div>
                 {!! Form::close() !!}
             @endif
+    </aside>
+        <div class="col-sm-8">
+            @include('users.navtabs', ['user' => $user])
+           
             @if (count($posts) > 0)
                 @include('posts.posts', ['posts' => $posts])
             @endif
         </div>
+        
     </div>
 @endsection
+
