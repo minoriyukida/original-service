@@ -79,5 +79,22 @@ class UsersController extends Controller
        
     }
     
+     public function posts($id)
+    {        
+            $user= User::find($id);
+            $posts = $user->posts();
+
+        $data = [
+            'user' => $user,
+            'posts' => $posts,
+        ];
+
+        $data += $this->counts($user);
+
+        return view('posts.postpage', $data);
+       
+    }
+    
+    
    
 }

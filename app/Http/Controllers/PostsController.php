@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Post;
+use App\User;
 
 class PostsController extends Controller
 {
@@ -17,14 +19,15 @@ class PostsController extends Controller
                 'user' => $user,
                 'posts' => $posts,
             ];
+            $data += $this->counts($user);
         }
        return view('welcome', $data);
     }
     
      public function store(Request $request)
-    {
+    {  
         $this->validate($request, [
-            'title' => 'required|max:191',
+        'title' => 'required|max:191',
             'content' => 'required|max:191',
         ]);
 
@@ -32,8 +35,20 @@ class PostsController extends Controller
             'title' => $request->title,
             'content' => $request->content,
         ]);
+        
+        $id=\Auth::id();
+        $user = User::find($id);
+        $posts = $user->posts()->orderBy('created_at', 'desc')->paginate(10);
+        
+         $data = [
+            'user' => $user,
+            'posts' => $posts,
+        ];
 
-        return back();
+        $data += $this->counts($user);
+        
+        return redirect('/');
+
     }
     
     public function destroy($id)
@@ -45,5 +60,14 @@ class PostsController extends Controller
         }
 
         return back();
+    }
+    
+     public function create()
+    {
+        $post = new Post;
+
+        return view('posts.create', [
+            'post' => $post,
+        ]);
     }
 }

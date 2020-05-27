@@ -41,4 +41,8 @@ Route::group(['middleware' => ['auth']], function () {
     });
     
      Route::resource('posts', 'PostsController', ['only' => ['store', 'destroy']]);
+     
+     // create: 新規作成用のフォームページ
+    Route::get('posts/create', 'PostsController@create')->name('posts.create');
+
 });

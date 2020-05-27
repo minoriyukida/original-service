@@ -5,17 +5,12 @@
        <div class="row">
             <aside class="col-sm-4">
                  @include('users.card', ['user' => Auth::user()])
+                  @if (Auth::id() == $user->id)
+                   {!! link_to_route('posts.create', '新規投稿の作成', [], ['class' => 'btn btn-warning']) !!}
+            @endif
             </aside>
             <div class="col-sm-8">
-                 @if (Auth::id() == $user->id)
-                    {!! Form::open(['route' => 'posts.store']) !!}
-                        <div class="form-group">
-                            {!! Form::textarea('title', old('title'), ['class' => 'form-control', 'rows' => '1']) !!}
-                            {!! Form::textarea('content', old('content'), ['class' => 'form-control', 'rows' => '2']) !!}
-                            {!! Form::submit('Post', ['class' => 'btn btn-primary btn-block']) !!}
-                        </div>
-                    {!! Form::close() !!}
-                @endif
+                @include('users.navtabs', ['user' => $user])
                 @if (count($posts) > 0)
                     @include('posts.posts', ['posts' => $posts])
                 @endif
@@ -24,8 +19,8 @@
     @else
     <div class="center jumbotron">
         <div class="text-center">
-            <h1>Welcome to coco gather</h1>
-            {!! link_to_route('signup.get', 'Sign up now!', [], ['class' => 'btn btn-lg btn-primary']) !!}
+            {!! link_to_route('signup.get', '会員登録', [], ['class' => 'btn btn-lg btn-primary']) !!}
+             {!! link_to_route('login', 'ログイン', [], ['class' => 'btn btn-lg btn-primary']) !!}
         </div>
     </div>
     @endif

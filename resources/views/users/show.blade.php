@@ -4,14 +4,8 @@
     <div class="row">
         <aside class="col-sm-4">
             @include('users.card', ['user' => $user])
-             @if (Auth::id() == $user->id)
-                {!! Form::open(['route' => 'posts.store']) !!}
-                    <div class="form-group">
-                        {!! Form::textarea('title', old('title'), ['class' => 'form-control', 'rows' => '1']) !!}
-                        {!! Form::textarea('content', old('content'), ['class' => 'form-control', 'rows' => '2']) !!}
-                        {!! Form::submit('投稿', ['class' => 'btn btn-primary btn-block']) !!}
-                    </div>
-                {!! Form::close() !!}
+            @if (Auth::id() == $user->id)
+                   {!! link_to_route('posts.create', '新規投稿の作成', [], ['class' => 'btn btn-warning']) !!}
             @endif
     </aside>
         <div class="col-sm-8">
